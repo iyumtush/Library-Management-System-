@@ -16,6 +16,10 @@ public class Main {
 		System.out.println(b1.toString());
 		System.out.println();
 		System.out.println(b2.toString());
+		
+		Member m1 = new Member(1,"Tushar");
+		System.out.println();
+		System.out.println(m1.toString());
 	}
 
 }
