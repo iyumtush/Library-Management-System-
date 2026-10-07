@@ -12,14 +12,24 @@ public class Main {
 		b2.setTitle("Python Programming");
 		
 		System.out.println("---Library Management System---");
-		System.out.println();
-		System.out.println(b1.toString());
-		System.out.println();
-		System.out.println(b2.toString());
+		System.out.println("\n"+b1.toString()+"\n");
+		System.out.println(b2.toString()+"\n");
 		
-		Member m1 = new Member(1,"Tushar");
-		System.out.println();
-		System.out.println(m1.toString());
+
+		
+		Student student = new Student(101,"Vedant","Java");
+		Faculty faculty = new Faculty(102 , "Shailesh Sir", "CSE");
+		
+		
+		Member[] type = {student , faculty};
+		
+		for(Member x : type)
+		{
+			System.out.println(x.toString()+"\n");
+			System.out.println(x.getBorrowLimit()+"\n");
+		}
+		
+		
 	}
 
 }

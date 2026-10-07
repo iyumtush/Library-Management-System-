@@ -1,6 +1,6 @@
 package Library;
 
-public class Member {
+public abstract class Member {
 
 	private int id;
 	private String name;
@@ -29,8 +29,15 @@ public class Member {
 		return name;
 	}
 	
+	public int getBorrowLimit()
+	{
+		return 0;
+	}
+	
+	@Override
 	public String toString()
 	{
-		return "  Member Id : "+this.id+" \n Name of Member : "+this.name;
+		return " Member Id : "+this.id+" \n Name of Member : "+this.name;
 	}
+
 }
