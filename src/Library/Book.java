@@ -1,6 +1,8 @@
 package Library;
 
-public class Book {
+import java.util.Scanner;
+
+public class Book implements Borrowable{
 
 	private int id ;
 	private String title;
@@ -53,5 +55,27 @@ public class Book {
 	{
 		return " The book id : "+ this.id + "\n Title : " + this.title 
 				+ "\n Author Name : " + this.author + "\n Availablity : " + this.available ;
+	}
+
+	@Override
+	public void borrowing() {
+		
+		if(this.available == true)
+		{
+			System.out.println("The book "+this.title+" is available you can borrow\n");
+			this.available = false;
+		}
+		else{
+		 System.out.println("The book "+this.title+" you are looking is not available , check after some time\n");
+		}
+		
+	}
+
+	@Override
+	public void returning() {
+		if(this.available == false)
+		{
+			this.available = true;
+		}
 	}
 }

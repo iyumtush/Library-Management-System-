@@ -11,11 +11,15 @@ public class Main {
 		b1.setAvailable(false);
 		b2.setTitle("Python Programming");
 		
+		
 		System.out.println("---Library Management System---");
 		System.out.println("\n"+b1.toString()+"\n");
 		System.out.println(b2.toString()+"\n");
 		
-
+		b1.setAvailable(true);
+		b1.borrowing();
+		
+		
 		
 		Student student = new Student(101,"Vedant","Java");
 		Faculty faculty = new Faculty(102 , "Shailesh Sir", "CSE");
