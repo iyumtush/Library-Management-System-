@@ -1,14 +1,16 @@
 package Library;
 
+import java.util.ArrayList;
+
 public class Library {
 
-	private Book[] books;
+	private ArrayList<Book> books;
 	
-	Library(Book[] books)
+	Library()
 	{
-		this.books = books;
+		this.books = new ArrayList<>();
 	}
-	
+	 
 	public void searchBook(int id)
 	{
 		boolean found = false;
@@ -50,6 +52,61 @@ public class Library {
 		  {
 			  System.out.println("Can't find\n");
 		  }	  
+		 
+
 	    }
-	}
+	 
+	public void addBook(Book book )
+	 {
+		if(isBookExist(book.getId()) == false)
+		{
+			 books.add(book);
+			 System.out.println("\nBook added succesesfully !");
+		}
+		else
+		{
+			System.out.println("\nBook id already exist , add book with diffrent id");
+		}
+		 
+	 }   
+    public int getTotalBook( )
+     {
+    	return books.size();
+     } 
+    
+    public void removeBook(int id)
+    {
+      books.remove(id);
+		 System.out.println("\nBook with id : "+id+" is removed succesesfully");
+    } 
+    
+    public void displayBook()
+    {
+    	if(books.isEmpty() == false)
+    	{
+    		System.out.println("\n Books available in the library : \n");
+    		for(Book x : books)
+    		{
+    			System.out.println(x);
+    		}
+    	}
+    	else
+    	{
+    		System.out.println("\nLibrary is empty at this time. Come back later...");
+    	}
+    } 
+    
+    public boolean isBookExist(int id)
+    {
+    	for(Book x : books)
+		{
+			if(id == x.getId())
+			{
+				return true;
+			}
+		}
+    	
+    	return false;
+    }
+}
 
