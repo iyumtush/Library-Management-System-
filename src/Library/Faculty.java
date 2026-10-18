@@ -1,5 +1,7 @@
 package Library;
 
+import java.util.ArrayList;
+
 public class Faculty extends Member{
 
 	private String department;

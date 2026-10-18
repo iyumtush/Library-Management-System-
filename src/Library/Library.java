@@ -1,14 +1,23 @@
 package Library;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Library {
 
 	private ArrayList<Book> books;
-	
 	Library()
 	{
-		this.books = new ArrayList<>();
+	    try
+	    {
+	        this.books = DatabaseConnection.getAllBooks();
+	    }
+	    catch(SQLException e)
+	    {
+	        e.printStackTrace();
+	        this.books = new ArrayList<>();
+	    }
 	}
 	 
 	public void searchBook(int id)
@@ -61,7 +70,13 @@ public class Library {
 		if(isBookExist(book.getId()) == false)
 		{
 			 books.add(book);
-			 System.out.println("\nBook added succesesfully !");
+			 
+			 try {
+				 DatabaseConnection.addBookToDatabase(book);
+				System.out.println("\nBook added succesesfully !");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		else
 		{
@@ -108,5 +123,95 @@ public class Library {
     	
     	return false;
     }
+    
+    public void borrowBook(Member member)
+	{
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter the book id which you want to borrow "
+				+ "\nID: ");
+		int mbookid = scanner.nextInt();
+		scanner.nextLine();
+		
+		Book foundBook = null;
+		 for(Book x : books)
+		  {
+			 if(mbookid == x.getId())
+			 {
+				 foundBook = x;
+				 break;
+			 
+		     }  
+			 
+	      }
+		 
+		 if(foundBook != null && foundBook.getAvailable() == true)
+		 {
+			 System.out.print("\nYour book found with id : "+mbookid+" "
+			 		+ "\nBook Info : "+foundBook.toString());
+			 System.out.print("\nDo you want to borrow this book ? (Yes/No) "
+			 		+ "\n:");
+			 String ansBorrow = scanner.nextLine();
+			 
+			 if(ansBorrow.equalsIgnoreCase("Yes"))
+			 {
+				 if(member.getBorrowBookCount() < member.getBorrowLimit())
+				 {
+				 member.addBorrowedBook(foundBook);
+				 System.out.println("\nThe book has been borrowed succsesfully..."); 
+				 foundBook.setAvailable(false);
+				 }else
+				    {
+				        System.out.println("\nYou have reached your borrowing limit.");
+				    }
+			 }else
+			 {
+				 System.out.println("\nNo changes has been made");
+			 }
+		 }
+		 else if(foundBook != null && foundBook.getAvailable() == false)
+		  {
+			  System.out.println("\nYour book found with id : "+mbookid+" , But currently its unavailable."
+			  		+ " \n Book Info : "+foundBook.toString());
+		  } else
+		  {
+			  System.out.println("\nYour book with id "+mbookid+" cannot find ");
+		  }
+	 }
+    
+    public void returnBook(Member member)
+    {
+    	Scanner scanner = new Scanner(System.in);
+    	
+    	System.out.print("\nEnter the book id you want to remove. "
+    			+ "\nID: ");
+    	int bookId = scanner.nextInt();
+    	
+    	Book foundBook = null;
+    	for(Book x : books)
+    	{
+    		if(bookId == x.getId())
+    		{
+    		foundBook = x;
+    		break;
+    		}
+    	}
+    	
+    	if(foundBook == null)
+    	{
+    		System.out.println("\nBook not found");
+    	}
+    	else if(member.hasBorrowedBook(foundBook))
+    	{
+    		member.removeBorrowedBook(foundBook);
+    		foundBook.setAvailable(true);
+    	   System.out.println("\nBook removed sucssesfully..");
+    	}
+    	else
+    	{
+    	    System.out.println("\nYou have not borrowed this book.");
+    	}
+    }
 }
+
 

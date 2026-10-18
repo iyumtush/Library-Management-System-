@@ -44,17 +44,17 @@ public class Book implements Borrowable{
 	}
 
 	@Override
-	public void borrowing() {
-		
+	public void borrowing() throws BookNotAvailableException {
+	
 		if(this.available == true)
 		{
 			System.out.println("\nThe book "+this.title+" is available you can borrow\n");
 			this.available = false;
+		}else
+		{
+			throw new BookNotAvailableException("Book is already borrowed!");
 		}
-		else{
-		 System.out.println("The book "+this.title+" you are looking is not available , check after some time\n");
-		}
-		
+			
 	}
 
 	@Override

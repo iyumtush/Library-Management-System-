@@ -2,7 +2,7 @@ package Library;
 
 public interface Borrowable {
 
-	void borrowing();
+	void borrowing() throws BookNotAvailableException;
 	
 	void returning();
 	 
