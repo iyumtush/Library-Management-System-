@@ -100,6 +100,55 @@ public class DatabaseConnection
 		con.close();
 	}
 	
+	public static Member getMemberById(int id) throws SQLException
+	{
+		String sql = "SELECT * FROM MEMBERS WHERE ID = ?";
+		
+		Connection con = getConnection();
+		PreparedStatement ps = con.prepareStatement(sql);
+		
+		ps.setInt(1, id);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next())
+		{
+			int memberId = rs.getInt("ID");
+			String name = rs.getString("NAME");
+			String memberType = rs.getString("MEMBER_TYPE");
+			
+			if(memberType.equalsIgnoreCase("STUDENT"))
+			{
+				String course = rs.getString("COURSE");
+				Student student = new Student(memberId, name, course);
+				
+				rs.close();
+				ps.close();
+				con.close();
+				
+				return student;
+				
+			}
+			else if(memberType.equalsIgnoreCase("FACULTY"))
+			{
+				String department = rs.getString("DEPARTMENT");
+				
+				Faculty faculty = new Faculty(memberId , name , department);
+				
+				rs.close();
+				ps.close();
+				con.close();
+				
+				return faculty;
+			}
+		}
+		
+		rs.close();
+		ps.close();
+		con.close();
+		
+		return null;
+	}
 	
 	
 	

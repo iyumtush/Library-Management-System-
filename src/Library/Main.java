@@ -12,7 +12,7 @@ public class Main {
 	{
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("\nEnter Member ID : ");
-		int mID = scanner.nextInt();
+		int mId = scanner.nextInt();
 		scanner.nextLine();
 		System.out.println("\nEnter the name :");
 		String mName = scanner.nextLine();
@@ -27,13 +27,13 @@ public class Main {
 			System.out.print("Enter course name :");
 			String sCourse = scanner.nextLine();
 			
-			Member = new Student( mID ,  mName , sCourse);
+			Member = new Student( mId ,  mName , sCourse);
 		}else if(selType == 2)
 		{
 			System.out.print("Enter department name : ");
 			String dName = scanner.nextLine();
 			
-			Member = new Faculty(mID, mName , dName);
+			Member = new Faculty(mId, mName , dName);
 		}
 		
 		try
@@ -49,6 +49,35 @@ public class Main {
 		return Member;
 	}
 	
+	public static  Member loginMember()
+	{
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("\nEnter member id : ");
+		int mId = scanner.nextInt();
+		
+		try
+		{
+			Member Member = DatabaseConnection.getMemberById(mId);
+			if(Member != null)
+			{
+				System.out.println("\nLogin Successfull !!!");
+				System.out.println("Welcome, " +Member.getName());
+				
+				return Member;
+			}
+			else
+			{
+				System.out.println("\nMember not found.");
+			}
+		}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		return null;
+			
+		}
+	
 	public static void main(String[] args) {
 		
 		try
@@ -62,8 +91,50 @@ public class Main {
 		    e.printStackTrace();
 		}
 		
-			System.out.println("---Library Management System---");
+		int choice;
 		
+		Member Member = null;
+	do
+	{
+			
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("\n================================");
+		System.out.println("   LIBRARY MANAGEMENT SYSTEM");
+		System.out.println("================================");
+		System.out.println("1. Login");
+		System.out.println("2. Register");
+		System.out.println("3. Exit");
+
+		System.out.print("\nEnter your choice: ");
+		choice = scanner.nextInt();
+		
+		
+		switch(choice)
+		{
+		case 1 : 
+			Member = loginMember();
+			break;
+		
+		case 2 :
+			Member = registerMember();
+			break;
+			
+		case 3 : 
+			System.out.println("\nThank you for using the Library Management System");
+			break;
+		} 
+		
+	}while(choice != 3);
+		
+		              
+	public static void libraryDashboard(Member Member)
+	{
+		int choice;
+		do
+		{
+			System.out.println();
+		}
+	}
 		
 
 		
